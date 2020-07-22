@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>呼吸轮播图</title>
 </head>
 <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
     body{
         font-family: '宋体';
         margin: 0;
@@ -16,6 +20,7 @@
         height: 400px;
         margin: 100px auto;
         position: relative;
+        display: block;
 
     }
     ul,li{
@@ -58,7 +63,32 @@
     .btnList .active{
         background-color: black;
     }
-
+    .btn-left,.btn-right{
+        width: 40px;
+        height: 60px;
+        background-color: #797676;
+        color: #ffffff;
+        font-size: 20px;
+        text-align: center;
+        line-height: 60px;
+        position: relative;
+        top: -230px;
+        display: none;
+    }
+    .btn-left{
+        float: left;
+        
+    }
+    .btn-right{
+        float: right;
+    }
+    .banner:hover .btn-left,.banner:hover .btn-right{
+        display: block;
+    }
+    .btn-left:hover{
+        opacity: 0.6;
+    }
+    
 </style>
 <body>
     <div class="banner">
