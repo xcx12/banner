@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        font-family: '宋体';
+        margin: 0;
+        padding: 0;
+    }
+    .banner{
+        width: 1000px;
+        height: 400px;
+        margin: 100px auto;
+        position: relative;
+
+    }
+    ul,li{
+        list-style: none;
+    }
+    .imgList{
+        position: relative;
+        width: 1000px;
+        height: 400px;
+
+    }
+    .imgList li{
+        position: absolute;
+        width: 1000px;
+        height: 400px;
+        display: none;
+    }
+    .imgList .cur{
+        display: block;
+    }
+   
+    .imgList img{
+        width: 1000px;
+        height: 400px;
+    }
+    .btnList{
+        position: absolute;
+    right: 0;
+    bottom: 0px;
+    }
+    
+    .btnList li{
+        
+        background-color: #dddddd;
+       float: left;
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+    .btnList .active{
+        background-color: black;
+    }
+
+</style>
+<body>
+    <div class="banner">
+        <ul class="imgList">
+            <li class="cur"><a href="javascript:"><img src="../爆炸焦点图/imgs/1.jpg" ></a></li>
+            <li><a href="javascript:"><img src="../爆炸焦点图/imgs/2.jpg" ></a></li>
+            <li><a href="javascript:"><img src="../爆炸焦点图/imgs/1.jpg" ></a></li>
+            <li><a href="javascript:"><img src="../爆炸焦点图/imgs/2.jpg" ></a></li>
+        </ul>
+        <ul class="btnList">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="btn">
+            <div class="btn-left"><</div>
+            <div class="btn-right">></div>
+        </div>
+    </div>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+        var index=0;
+        //获取长度
+          var len=$('.imgList li').length;
+        var nextFn=function(){
+          
+            console.log(len)
+            $('.imgList li').eq(index).stop().fadeOut(1000)
+            index++;
+            if(index==len){
+                index=0;
+            }
+            //让下一个角标增加active
+            $('.btnList li').eq(index).addClass('active').siblings('li').removeClass('active')
+            //下一张淡入
+            $('.imgList li').eq(index).stop().fadeIn(1000)
+        }
+         time=setInterval(nextFn,1000);
+        $('.btn-right').click(nextFn)
+        var preFn=function(){
+            $('.imgList li').eq(index).stop().fadeOut(1000)
+            index--;
+            if(index<0)
+            {
+                index=len;
+            }
+              //让上一个角标增加active
+              $('.btnList li').eq(index).addClass('active').siblings('li').removeClass('active')
+            //下一张淡入
+            $('.imgList li').eq(index).stop().fadeIn(1000)
+        }
+        $('.btn-left').click(preFn)
+        $('.btnList li').click(function(event){
+            $('.imgList li').eq(index).stop().fadeOut(1000);
+            index=$(this).index();
+            $('.btnList li').eq(index).addClass('active').siblings('li').removeClass('active')
+            $('.imgList li').eq(index).stop().fadeIn(1000)
+        });
+        $('btnList li').mouseover(function(){
+            $('.imgList li').eq(index).stop().fadeOut(1000);
+            index=$(this).index();
+            $('.btnList li').eq(index).addClass('active').siblings('li').removeClass('active')
+            $('.imgList li').eq(index).stop().fadeIn(1000)
+         
+        })
+    </script>
+</body>
+</html>
