@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .banner{
+        width: 1200px;
+        height: 400px;
+        border: 1px solid #eeeeee;
+        margin: 100px 0 auto;
+        position: relative;
+        overflow: hidden;
+       
+    }
+    /* 长度是2个li标签加上两个复制标签的长度 */
+    .list{
+        width: 2400px;
+        height: 100%;
+        position: relative;
+    }
+    .list li{
+        display: block;
+        float: left;
+        width: 600px;
+    }
+    .list img{
+        display: block;
+        width: 600px;
+        height: 400px;
+    }
+    .btn{
+        display: block;
+        width: 1200px;
+        text-align: center;
+       
+    }
+    .btn a{
+        
+        text-decoration: none;
+        color: black;
+    }
+    .btn .btn-left,.btn-right{
+        display: inline-block;
+        width: 60px;
+        height: 70px;
+        line-height: 70px;
+        background-color: #eee;
+    }
+    .btn .btn-left{
+        position: relative;
+        top: -220px;
+       
+        float: left;
+    }
+    .btn .btn-right{
+        position: relative;
+        top: -220px;
+       
+        float: right;
+    }
+
+</style>
+<body>
+    <div class="banner">
+        <ul class="list">
+            <li><a href="javascript:"><img src="../爆炸焦点图/imgs/1.jpg" alt=""></a></li>
+            <li><a href="javascript:"><img src="../爆炸焦点图/imgs/2.jpg" alt=""></a></li>
+        </ul>
+    </div>
+    <div class="btn">
+        <a href="javascript:" class="btn-left"><<</a>
+        <a href="javascript:" class="btn-right">>></a>
+    </div>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script>
+        //定义变量，模拟list的left值
+        var myLeft=0;
+        //克隆两个li
+        var mytLi=$('.list li:lt(2)').clone(true)//列表中小于2的元素
+        //将克隆出来的节点插入到list的末尾（将mytLi插入到.list类中）
+        $('.list').append(mytLi)  //知识点：append和appendTo区别
+        var timer;
+        //定义方向变量，用来知道ul运动方向
+        var fangxiang='left';
+        //往左走功能函数
+        var leftFn=function(){
+            //调用做功能，将方向和功能方向保持一致
+            fangxiang='left';
+            //每次将left进行减减（向左平移，越大速度越快）
+            myLeft=myLeft-2;
+            //如果myLeft<=-1200，就代表一个轮回走完了；
+            //就要让轮回回到最开始的地方：0
+            if(myLeft<=-1200){
+                myLeft=0;
+            }
+            //将这个不断改变的myLeft变量和list身上的left值进行同步
+            $('.list').css('left',myLeft);
+        }
+        //往右走功能函数
+        var rightFn=function(){
+            fangxiang='right';
+            myLeft=myLeft+2;
+            if(myLeft>0){
+                myLeft=-1200;
+            }
+            //将这个不断改变的myLeft变量和list身上的left值进行同步
+            $('.list').css('left',myLeft);
+        }
+        //默认是往左走，定时
+        timer=setInterval(leftFn,30);
+        //当单击右按钮时，让盒子往右走
+        $('.btn-right').click(function(event){
+            clearInterval(timer)
+            //先清除旧的定时器，再开启一个新定时器，这个定时器调用rightFn功能
+            timer=setInterval(rightFn,30);
+
+        })
+        $('.btn-left').click(function(event){
+            clearInterval(timer)
+            timer=setInterval(leftFn,30);
+
+        })
+        $('.banner').hover(function(){
+            //鼠标移到banner上时，让定时器停止
+            clearInterval(timer);
+        },function(){
+            clearInterval(timer)
+            //当鼠标离开时，进行方向的判断，如果当前这个方向是left，重启时需要调用leftFn；
+            //如果当前这个方向是right，重启时需要调用rightFn
+            if(fangxiang=='left')
+            {
+                timer=setInterval(leftFn,30)
+
+            }else{
+                timer=setInterval(rightFn,30)
+            }
+        })
+        $('.list li').hover(function(){
+            //让当前这个LI的小伙伴们的透明度降低
+            $(this).siblings().stop().fadeTo(500,.4)
+        },
+        function(){
+            //离开时，将所有LI的透明度还原
+            $('.list li').stop().fadeTo(500,1)
+        
+        })
+    </script>
+</body>
+</html>
